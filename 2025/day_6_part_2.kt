@@ -9,8 +9,8 @@ fun solve(input: String) {
     val results = listOfDigitsWithOperationChunked.map {
         it.first().last() to it.map { numbersBlanksOperations ->
             numbersBlanksOperations.filterNot { numbersBlanksOperation ->
-                numbersBlanksOperation.toIntOrNull() == null
-            }.map { str -> str.toInt() }.toNumber()
+                numbersBlanksOperation.toLongOrNull() == null
+            }.map { str -> str.toInt().toLong() }.toNumber()
         }
     }.map {
         if (it.first == "+") {
@@ -24,27 +24,29 @@ fun solve(input: String) {
     println(results.sum())
 }
 
-fun List<Int>.multiplyTogether(): Int {
-    var result = 1
+// 1100101072 - too low
+
+fun List<Long>.multiplyTogether(): Long {
+    var result = 1L
     this.forEach {
         result *= it
     }
     return result
 }
 
-fun List<Int>.addTogether(): Int {
-    var result = 0
+fun List<Long>.addTogether(): Long {
+    var result = 0L
     this.forEach {
         result += it
     }
     return result
 }
 
-fun List<Int>.toNumber(): Int {
-    var result = 0
+fun List<Long>.toNumber(): Long {
+    var result = 0L
     val size = size
     this.forEachIndexed { index, digit ->
-        result += (digit * 10f.pow(size - index - 1)).toInt()
+        result += (digit * 10f.pow(size - index - 1)).toLong()
     }
     return result
 }
@@ -62,8 +64,10 @@ fun <T> List<T>.split(predicate: (T) -> Boolean): List<List<T>> {
 // 356 * 24 * 1 = (300 + 50 + 6) * (20 + 4) * (1) 356 24 1
 
 val sample = """
-    12 32 51 64
-    *  +  *  + 
+    123 328  51 64 
+     45 64  387 23 
+      6 98  215 314
+    *   +   *   +  
 """.trimIndent()
 
 /**
@@ -89,4 +93,4 @@ val input = """
     *   +   *   *  *  +   *  +    *   +    +   *   +   +   +   *  *  *   +  *   *  *  *  +   *   +   *  *  +   +   *  +    *   +  +    *   *  *  *  *   *   +  *   *  *  +   *  *  *   *   +  +    +    *  *  +  *   +  +    +  +  *   *   +  *   *   +    +    +   *  *   *  +    *   *   +   *  *   +    +    *  +  +  *  *  +   *   +    *   +  *   *  +  *   +   *  +  +   +    +   +    +    +  +  *   *   *   *   *  *  +    *   +    *  +   +  +    +    +   *   +   +    *  *  *  *   +  *   +    *  *   *   *  *  +  +  +  *   *  *  *  *   +  *  +   +  *  +  *  *  +    +  +   +    *  *  *   *  +  +    *   *  +  +  +  *   *  +  *   *  +    *   *  +    *  *  +    +  +  +   +   +   +   +  *   +    *  *   +   *   +    *  +   +    *   *   *   *   *  *  *   +  *  *   +    +  *   *   +  +  +    +  *   *  +   +    *  +    *   *  +   +    +    *  +    +    +  *  *  *   +  +   *  *  *   +  *   +    *  *   +    +  *   *  +    *   +   +   *  *   +  +  *   +   +  *   +  +    +   *  *   +   *  *  +  +   +    +    *  +   +   +   +   +    *  *  +   *  *   +  *   *   *  +  +   *  *   *   +  +    *  *   *  *  +  *  +   *   *   +  *  +    +    *   *  *   +    +  +    *   +   +    +    *   +  *  *  +  *  *  *   *   *   +  +  +    *   *  +    *   *   +    +    +   +   *   *   +    *  *  *   *  +  +   *   +    *  +    *  *   +  *   +  +  +  *   +    +    *  *  *  *   +    *   +   +  +    +  *   *  *  *  +  +  *   +    *   *  *  +    *   *  *  +  *   *  *  *  *   +  *  *  +  *  +  +  +   +   +    *  +    +    *   *  *  +  *   +    +    +    *  +  *   *  *  *  +  *   *  *  *   *   *  +    +    *   *  +    *  *  +    +   *  *   *  +   *   +    *   +    *  *  +    +   *   +  +  +  *   +    +    +   +  *   *   *  +   *   +  +    +    +    +  *   +  +  *  +   +  +    +    +   *  *  +  *   *  *  +    +   *   +  +   +    *  *  +  *  +    *   *  *   *   +   +    *   *   *   +    *  +    *  +    *  +    +   *   +    *  +  +   *  *  *  +    *   +    *   *   +  *  *   *  *   +   *  +    *  *  *  *   *   *   *   *  *   *   +   +  *  *  +   *   +   *   +  +  *   *  +  *   +  +   *  *   +    *  *  +   +  +  +  +  +    *  *  +  *   *  *   *  *   *  +   *   *   +   +    +   *  +   *   +   +    +    *  *  *   *  +   *  +  +   +    *   *  +  *   +   *  +    *   *   +    +  +    +  +   +    +    *   +    *  +   +   *   +   *  +    +  +    *  +  *  *   +  *   *  +    +    +    +    *  *   *   *  +  *   *  +  +    +  +    *  +  +  +    *  *   +   +   +    *   +    *   *   +   *   +   *  +  +    +   *  *  *   *   +   *  +    +   +   +  *  +   +    *  *   +   *   +    *  *  +    *   +    +    *   *   +  *   +    +  *  *   +  +    +    *  +   +  +    *  +    *  *  *  +  *   *  *   *  +   *   *   *   *   *   +  +    +  *   +   +    *   +    *   *   *  +    *   +    +    +   *  +    +   *   +  +   +   *   +  *  *  *  +  +  *  *  *   +    +   *   +  +  +   *  +  +   *   +    *   +    *   +  *  *   +  *  *  *   +  *  *  +  *  +  +   +   *   +    *  *   +  +    *  +  +  +   +  +  +  *   +   *  +  +   *  +    *  *  *   *   +   +   +  *  *  +  +   +    +  +    *   +   +  *   +   *   +  *   *   +  *  +   +  *   +   *  *   +  *  *  *  *   *   +    *  *   *   +   +    +  +  +    *   *   *   *   *   *  +   +  *   +   +   +  +   +   +    *  +   +  +    +    *  +    +   +  *  *  +    *  +   *   +   *   +   +    +   *   *  +  +  +   *   +   *   +    *  *  *  *   +    *   +  *  *  *   +   +    *   +   +   *   +    *   +    *  +  *  *  *   *   *  +   +    +    +   *  +    +  *   +   *   *  *   *  +    *  +   +   +   +  *  *  *   +  +   *   *   +   +   *   *  +   +   +    *   +   +    *   *  +    +  *  *  +  *   *  +    *  *  +  *  +  *   +  +   *   +   +   *   *   +   *  *  +   *   +   +   *   *  *  +  *  +    *  *  +   +   *  *   *   *  *   +  *   * 
 """.trimIndent()
 
-solve(sample)
+solve(input)
