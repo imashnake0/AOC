@@ -3,7 +3,7 @@ import sun.security.util.Length
 fun accessible(gridInput: String): Int {
     val gridSplit = gridInput.split("\n")
     val length = gridSplit[0].length
-    val grid = gridSplit.joinToString("")
+    val grid = gridSplit.joinToString("").toMutableList()
 
     var count = 0
 
@@ -33,6 +33,12 @@ fun accessible(gridInput: String): Int {
             count++
         }
     }
+
+    repeat(grid.size.floorDiv(length)) {
+        grid.add((length + 1) * it, '\n')
+    }
+
+    println(grid.joinToString(""))
 
     return count
 }
@@ -200,4 +206,4 @@ val input = """
     @@@@@@.@@@@@@...@@@@@@..@@.@@..@..@.@@@@@@@@.@@@@.@.@@@@.@.@@@@.@@@@@@@@@@@@.@@..@@@@@@@@...@@@.@@@@.@@.@@.@@..@...@@@@.@@@@.@@@@@.@@@@@@@@
 """.trimIndent()
 
-accessible(input)
+accessible(sample)
