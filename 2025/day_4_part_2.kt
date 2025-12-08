@@ -48,11 +48,11 @@ fun accessible(gridInput: String): Int {
         }
     }
 
-//    repeat(grid.size.floorDiv(length)) {
-//        grid.add((length + 1) * it, '\n')
-//    }
-//
-//    println(grid.joinToString(""))
+    val printableGrid = grid
+    repeat(printableGrid.size.floorDiv(length)) {
+        printableGrid.add((length + 1) * it, '\n')
+    }
+    println(printableGrid.joinToString(""))
 
     return count
 }
