@@ -42,7 +42,7 @@ fun isAtLeftEdge(index: Int, length: Int): Boolean {
 }
 
 fun isAtRightEdge(index: Int, length: Int): Boolean {
-    return (index - length - 1) % length == 0
+    return (index - length + 1) % length == 0
 }
 
 val sample = """
